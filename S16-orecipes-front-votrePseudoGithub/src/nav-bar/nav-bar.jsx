@@ -1,21 +1,40 @@
 import React from 'react';
+import { NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 export default function Navbar({ recipes }) {
   return (
     <div className="d-flex flex-column p-3 bg-dark" style={{ width: '250px', height: '100vh', position: 'fixed', top: '0', left: '0' }}>
-      <h4 className="text-light pb-3">Accueil</h4>
+
+      <Link className="text-light pb-3" to={`/`} >
+        Accueil
+      </Link>
+
       <div className="list-group list-group-flush">
         {recipes.map((recette) => (
-          <a 
-            href={`${recette.id}`} 
-            className="list-group-item list-group-item-action bg-dark text-light"
+
+
+          // <Link className="list-group-item list-group-item-action bg-dark text-light" to={`/recipe/${recette.id}`} key={recette.id} >
+          //   {recette.title}
+          // </Link>
+
+          <NavLink
             key={recette.id}
+            to={`/recipe/${recette.id}`}
+            className={({ isActive }) =>
+              isActive
+                ? "d-none"  // Cache le lien si actif
+                : "list-group-item list-group-item-action bg-dark text-light"
+            }
           >
             {recette.title}
-          </a>
+          </NavLink>
         ))}
       </div>
     </div>
   );
 }
+
+
+
 

@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom'; 
+
 export default function HomePage({ recipes }) {
   return (
     <div>
@@ -15,9 +17,9 @@ export default function HomePage({ recipes }) {
                 <h5 className="card-title">{recette.title}</h5>
                 <p className="card-text">Difficulté : {recette.difficulty}</p>
                 <p className="card-text">{recette.description}</p>
-                <a href={recette.id} className="btn btn-primary mt-auto">
+                <Link to={`/recipe/${recette.id}`} className="btn btn-primary mt-auto">
                   Voir la recette
-                </a>
+                </Link>
               </div>
             </div>
           </div>
@@ -26,3 +28,13 @@ export default function HomePage({ recipes }) {
     </div>
   );
 }
+
+{/* <NavLink
+  className={({ isActive }) => {
+    // la callback doit return la classe
+    // pour savoir quelle classe renvoyer faut savoir si on est actif ou pas
+    // on reçoit cette info en paramètre : un objet contenant une clé isActive
+    return isActive ? 'menu-link menu-link--selected' : 'menu-link';
+  }}
+  to="/"
+></NavLink> */}
