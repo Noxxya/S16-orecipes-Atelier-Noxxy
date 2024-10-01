@@ -1,8 +1,12 @@
 import { useState, useEffect } from 'react'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css'
 import HomePage from './homepage/homepage';
 import Navbar from './nav-bar/nav-bar';
 import RecipeDetail from './recette-content/recipeDetail';
+import LoginForm from './login-bar/login-bar';
+import ScrollToTop from './ScrollToTop/ScrollToTop';
+
 
 export default function App() {
   // Initialisation du state 'recipe' avec un tableau contenant une recette par défaut
@@ -67,14 +71,48 @@ export default function App() {
   // Rendu principal : on passe les recettes au composant HomePage
   // HomePage va gérer l'affichage des recettes avec un .map()
   return (
-    <div className="app-container">
-      {/* Barre de navigation latérale */}
-      <Navbar recipes={recipe} />
+    <Router>
+      <ScrollToTop />
+      <div className="app-container container-fluid">
+        {/* Barre de connexion en haut de la page */}
+        <LoginForm />
+        <div className='page-principale row' style={{ display: 'flex' }}>
+          {/* Barre de navigation latérale */}
+          <Navbar recipes={recipe}/>
 
-      {/* Contenu principal avec un décalage pour éviter le chevauchement */}
-      <div className="content" style={{ marginLeft: '250px', padding: '20px' }}>
+          {/* Contenu principal avec un décalage pour éviter le chevauchement */}
+          {/* <div className="content" style={{ marginLeft: '250px', padding: '20px' }}>
         <HomePage recipes={recipe} />
+      </div> */}
+
+          <div className="content col-8 d-flex justify-content-center align-items-center" style={{ marginLeft: '340px' }}>
+            {/* Conteneur principal pour le contenu, avec un style inline pour le décalage et le padding */}
+
+            <Routes>
+
+              {/* Composant Routes de React Router qui englobe toutes les définitions de route */}
+
+              <Route path='/' element={<HomePage recipes={recipe} />} />
+              {/* Route pour la page d'accueil
+              - path='/' signifie que cette route correspond à l'URL racine
+              - element spécifie le composant à rendre (HomePage)
+              - La prop recipes est passée au composant HomePage */}
+
+              <Route path="/recipe/:id" element={<RecipeDetail />} />
+              {/* Route pour les détails d'une recette
+              - path="/recipe/:id" utilise un paramètre dynamique :id
+              - Cela permettra de capturer l'ID de la recette dans l'URL
+              - Le composant RecipeDetail sera rendu pour cette route */}
+
+              <Route path="*" element={<p>Page non trouvée</p>} />
+              {/* Route par défaut (catch-all)
+              - path="*" correspond à toutes les URL qui ne correspondent pas aux routes précédentes
+              - Affiche un message simple "Page non trouvée"
+              - C'est une bonne pratique pour gérer les URL invalides */}
+            </Routes>
+          </div>
+        </div>
       </div>
-    </div>
+    </Router>
   );
 }
