@@ -85,7 +85,7 @@ export default function App() {
         <HomePage recipes={recipe} />
       </div> */}
 
-          <div className="content col-8 d-flex justify-content-center align-items-center" style={{ marginLeft: '340px' }}>
+          <div className="content col-9 d-flex justify-content-center align-items-center" style={{ marginLeft: '310px' }}>
             {/* Conteneur principal pour le contenu, avec un style inline pour le décalage et le padding */}
 
             <Routes>

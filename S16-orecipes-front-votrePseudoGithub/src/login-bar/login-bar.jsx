@@ -1,14 +1,44 @@
 import { useState } from 'react';
 
+
 export default function LoginNavbar() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [success, setSuccess] = useState(false);
+  const [error, setError] = useState(null);
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     console.log('Nom d\'utilisateur:', username);
     console.log('Mot de passe:', password);
-    // TODO: Ajouter la logique de connexion ici
+
+    // Post sur l'API
+    try{
+      const response = await  fetch('https://orecipesapi.onrender.com/api/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type' : 'application/json'
+        },
+        body: JSON.stringify({
+          email: username,
+          password: password,
+        })
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        console.log('connexion réussie', data);
+        setSuccess(true);
+        setError(null);
+      } else {
+        setError(data.message || 'Erreur de connexion');
+        setSuccess(false);
+      }
+
+    } catch (error) {
+      console.error('Erreur lors de la connexion:', error);
+    }
   };
 
   return (

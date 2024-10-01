@@ -7,7 +7,7 @@ export default function Navbar({ recipes }) {
   return (
     // Conteneur principal de la barre de navigation
     // Utilise des classes Bootstrap pour le style et le positionnement
-    <div className="d-flex flex-column p-3 bg-dark col-4" style={{ width: '250px', height: '100vh', position: 'fixed', top: '0', left: '0' }}>
+    <div className="d-flex flex-column p-3 bg-dark col-3" style={{ width: '250px', height: '100vh', position: 'fixed', top: '0', left: '0' }}>
 
       {/* Lien vers la page d'accueil */}
       <Link className="text-light pb-3" to={`/`} >

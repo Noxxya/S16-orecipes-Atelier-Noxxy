@@ -51,36 +51,68 @@ export default function RecipeDetail() {
 
   // Rendu des détails de la recette
   return (
-    <div className="recipe-detail">
+    <div className="recipe-detail container mt-5">
       <ScrollToTop />
-      
-      <div className="recipe-header">
-        <div className="recipe-info">
-          <h2>{recipe.title}</h2>
-          <p>Par {recipe.author}</p>
+
+      <div className="recipe-header position-relative mb-5 mt-5">
+        <img
+          src={recipe.thumbnail}
+          alt={recipe.title}
+          className="w-100 img-fluid recipe-image"
+          style={{ height: '80vh', objectFit: 'cover' }}
+        />
+        <div className="position-absolute bottom-0 start-0 w-100 p-4 bg-dark bg-opacity-75 recipe-infos">
+          <h1 className="display-4 text-white fw-bold">{recipe.title}</h1>
+          <p className="text-white-50 mb-0">
+            <span className="me-3">
+              <i className="bi bi-person-fill"></i> {recipe.author}
+            </span>
+            <span>
+              <i className="bi bi-star-fill"></i> {recipe.difficulty}
+            </span>
+          </p>
         </div>
-        <img src={recipe.thumbnail} alt={recipe.title} className="img-fluid recipe-image" />
       </div>
-  
-      <div className="recipe-body">
-        <p className="recipe-description">{recipe.description}</p>
-        <p className="recipe-difficulty">Difficulté : {recipe.difficulty}</p>
-  
-        <h3>Ingrédients :</h3>
-        <ul className="ingredients-list">
-          {recipe.ingredients.map((ingredient) => (
-            <li key={ingredient.id}>
-              {ingredient.quantity} {ingredient.unit} {ingredient.name}
-            </li>
-          ))}
-        </ul>
-  
-        <h3>Instructions :</h3>
-        <ol className="instructions-list">
-          {recipe.instructions.map((instruction) => (
-            <li key={`${recipe.id}-${instruction.slice(0, 20)}`}>{instruction}</li>
-          ))}
-        </ol>
+
+      <div className="row">
+        {/* Colonne pour les Ingrédients */}
+        <div className="col-md-6">
+      <h3 className="my-4">Ingrédients :</h3>
+      <ul className="list-group ingredients-list mb-4">
+        {recipe.ingredients.map((ingredient) => (
+          <li
+            key={ingredient.id}
+            className="list-group-item d-flex justify-content-between align-items-center border-0 px-0 py-3"
+          >
+            <div className="d-flex align-items-center">
+              <input
+                type="checkbox"
+                id={`ingredient-${ingredient.id}`}
+                className="form-check-input me-3 case"
+              />
+              <label htmlFor={`ingredient-${ingredient.id}`} className="form-check-label">
+                <span className="badge bg-primary badge-pill px-3 py-2 me-2">
+                  {ingredient.quantity} {ingredient.unit}
+                </span>
+                {ingredient.name}
+              </label>
+            </div>
+          </li>
+        ))}
+      </ul>
+    </div>
+
+        {/* Colonne pour les Instructions */}
+        <div className="col-md-6">
+          <h3 className="my-4">Instructions :</h3>
+          <ol className="list-group list-group-numbered instructions-list p-3 bg-light rounded border-0">
+            {recipe.instructions.map((instruction, index) => (
+              <li key={`${recipe.id}-${index}`} className="list-group-item border-0 px-0 py-2">
+                {instruction}
+              </li>
+            ))}
+          </ol>
+        </div>
       </div>
     </div>
   );
